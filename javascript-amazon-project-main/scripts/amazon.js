@@ -50,16 +50,44 @@ products.forEach((product) => {//Accumulating the result
               Added
             </div>
 
-            <button class="add-to-cart-button button-primary">
+            <button class="add-to-cart-button button-primary js-add-to-cart"
+            data-product-id="${product.id}">
               Add to Cart
             </button>
       </div>
   `;
 });
 
-console.log(productsHTML);
 
 //Using .toFixed() - will convert a number to string and can tell it how many decimal we want in the bracket.
 //Generating the html and using the DOM to put the html on the webpage
 document.querySelector('.js-products-grid')
 .innerHTML = productsHTML;
+
+//Using addEventListener and DOM querySelectorAll to make the Add to cart button work
+document.querySelectorAll('.js-add-to-cart')
+.forEach((button) => {
+  button.addEventListener('click', () => {
+    //Data attribute - Allows us to attach any information to an element
+    const productId = button.dataset.productId;//dataset property gives us all the data attribute attached to the button.
+
+    let matchingItem;
+
+    cart.forEach((item) => {
+      if (productId === item.productId) {
+        matchingItem = item;
+      }
+    });
+
+    if (matchingItem) {
+      matchingItem.quantity += 1;
+    } else {
+      cart.push({
+        productId: productId,
+        quantity: 1
+      });
+    }
+
+    console.log(cart);
+  });
+})

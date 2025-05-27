@@ -88,6 +88,16 @@ document.querySelectorAll('.js-add-to-cart')
       });
     }
 
-    console.log(cart);
+    //Making cart quantity interactive
+    //1. Calculate the quantity
+    let cartQuantity = 0;
+    
+    cart.forEach((item) => {
+      cartQuantity += item.quantity;
+    });
+    
+    //2. Put the quantity on the page
+    document.querySelector('.js-cart-quantity')
+    .innerHTML = cartQuantity;
   });
-})
+});

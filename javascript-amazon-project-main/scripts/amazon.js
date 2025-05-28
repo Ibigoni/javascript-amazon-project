@@ -1,7 +1,6 @@
 import {cart} from  '../data/cart.js';
 import {products} from '../data/products.js';//()..)represents the folder outside of the current folder. U can also use {cart as myCart} to rename.
 
-//Modules are a better way to organize our code
 
 
 //Amazon data structure (arrays and objects)

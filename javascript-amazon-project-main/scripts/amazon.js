@@ -1,7 +1,5 @@
-import {cart} from  '../data/cart.js';
+import {cart, addToCart} from  '../data/cart.js';
 import {products} from '../data/products.js';//()..)represents the folder outside of the current folder. U can also use {cart as myCart} to rename.
-
-
 
 //Amazon data structure (arrays and objects)
  //something that closely matches the data (an array). Since each products has many values we use (an object) that will represent each data.
@@ -69,71 +67,30 @@ products.forEach((product) => {//Accumulating the result
 document.querySelector('.js-products-grid')
 .innerHTML = productsHTML;
 
-//Using addEventListener and DOM querySelectorAll to make the Add to cart button work
-document.querySelectorAll('.js-add-to-cart')
-.forEach((button) => {
-  
-  let addedId;
-
-  button.addEventListener('click', () => {
-    //Data attribute - Allows us to attach any information to an element
-    
-    
-    const {productId} = button.dataset;//dataset property gives us all the data attribute attached to the button.   
-
-    //Select different quantities
-    const quantitySelector = document.querySelector(`.js-cart-quantity-selector-${productId}`);
-    
-    const quantity = Number(quantitySelector.value);
-
-    //show added after clicking add to cart button
-    const added = document.querySelector(`.js-added-to-cart-${productId}`);
-    
-
-    added.classList.add('message');
-    
-    //Check if a previous timeoutId exists. if it does,
-    //we will stop it
-    if (addedId){
-    clearTimeout(addedId);
-    }
-
-     const timeoutId = setTimeout(() => {
-      added.classList.remove('message');
-    }, 2000)
-    
-    //Save the timeoutId so we can stop it later
-    addedId = timeoutId;
-
-    let matchingItem;
-    
-    cart.forEach((item) => {
-      if (productId === item.productId) {
-        matchingItem = item;
-      }
-    });
-    
-    if (matchingItem) {
-      matchingItem.quantity += quantity;
-    } else {
-      cart.push({
-        productId,
-        quantity,
-        added
-      });
-    }
-    
-    //Making cart quantity interactive
+function updateCartQuantity() {
+//Making cart quantity interactive
     //1. Calculate the quantity
     let cartQuantity = 0;
     
-    cart.forEach((item) => {
-      cartQuantity += item.quantity;
+    cart.forEach((cartItem) => {
+      cartQuantity += cartItem.quantity;
     });
     
     //2. Put the quantity on the page
     document.querySelector('.js-cart-quantity')
     .innerHTML = cartQuantity;
+}
+//Using addEventListener and DOM querySelectorAll to make the Add to cart button work
+document.querySelectorAll('.js-add-to-cart')
+.forEach((button) => {
+
+  button.addEventListener('click', () => {
+    //Data attribute - Allows us to attach any information to an element
+  
+    const {productId} = button.dataset;//dataset property gives us all the data attribute attached to the button.   
+    addToCart(productId);
+    updateCartQuantity();
+    
   });
 
 });

@@ -29,7 +29,7 @@ products.forEach((product) => {//Accumulating the result
             </div>
 
             <div class="product-quantity-container">
-              <select>
+              <select class="js-cart-quantity-selector-${product.id}">
                 <option selected value="1">1</option>
                 <option value="2">2</option>
                 <option value="3">3</option>
@@ -45,7 +45,7 @@ products.forEach((product) => {//Accumulating the result
 
             <div class="product-spacer"></div>
 
-            <div class="added-to-cart">
+            <div class="added-to-cart js-added-to-cart-${product.id}">
               <img src="images/icons/checkmark.png">
               Added
             </div>
@@ -67,27 +67,57 @@ document.querySelector('.js-products-grid')
 //Using addEventListener and DOM querySelectorAll to make the Add to cart button work
 document.querySelectorAll('.js-add-to-cart')
 .forEach((button) => {
+  
+  let addedId;
+
   button.addEventListener('click', () => {
     //Data attribute - Allows us to attach any information to an element
-    const productId = button.dataset.productId;//dataset property gives us all the data attribute attached to the button.
+    
+    
+    const {productId} = button.dataset;//dataset property gives us all the data attribute attached to the button.   
+
+    //Select different quantities
+    const quantitySelector = document.querySelector(`.js-cart-quantity-selector-${productId}`);
+    
+    const quantity = Number(quantitySelector.value);
+
+    //show added after clicking add to cart button
+    const added = document.querySelector(`.js-added-to-cart-${productId}`);
+    
+
+    added.classList.add('message');
+    
+    //Check if a previous timeoutId exists. if it does,
+    //we will stop it
+    if (addedId){
+    clearTimeout(addedId);
+    }
+
+     const timeoutId = setTimeout(() => {
+      added.classList.remove('message');
+    }, 2000)
+    
+    //Save the timeoutId so we can stop it later
+    addedId = timeoutId;
 
     let matchingItem;
-
+    
     cart.forEach((item) => {
       if (productId === item.productId) {
         matchingItem = item;
       }
     });
-
+    
     if (matchingItem) {
-      matchingItem.quantity += 1;
+      matchingItem.quantity += quantity;
     } else {
       cart.push({
-        productId: productId,
-        quantity: 1
+        productId,
+        quantity,
+        added
       });
     }
-
+    
     //Making cart quantity interactive
     //1. Calculate the quantity
     let cartQuantity = 0;
@@ -100,4 +130,5 @@ document.querySelectorAll('.js-add-to-cart')
     document.querySelector('.js-cart-quantity')
     .innerHTML = cartQuantity;
   });
+
 });

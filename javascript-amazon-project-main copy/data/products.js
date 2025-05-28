@@ -656,5 +656,52 @@ const products = [
       "apparel",
       "mens"
     ]
+  },
+  {
+    id: "a93b2c40-13f1-4e9a-9c2e-bf12cd0498af",
+    image: "images/products/backpack.jpg",
+    name: "Black Backpack",
+    rating: {
+      stars: 3.5,
+      count: 114
+    },
+    priceCents: 2999,
+    keywords: [
+      "back",
+      "pack",
+      "black",
+      "bag"
+    ]
+  },
+  {
+    id: "f017a8b2-9e23-4412-b4d4-9a2d11e85ed3",
+    image: "images/products/umbrella.jpg",
+    name: "Umbrella",
+    rating: {
+      stars: 4.5,
+      count: 50
+    },
+    priceCents: 1500,
+    keywords: [
+      "brella",
+      "rain",
+      "umb",
+    ]
+  },
+  {
+    id: "5f4cce8e-c1aa-467f-bc23-d1013792b88c",
+    image: "images/products/Crocs-Unisex-Adult-Classic-Clog.jpg",
+    name: "Crocs Unisex Adult Classic Clog",
+    rating: {
+      stars: 5,
+      count: 629
+    },
+    priceCents: 3000,
+    keywords: [
+      "croc",
+      "clog",
+      "slippers",
+      "shoe"
+    ]
   }
 ];

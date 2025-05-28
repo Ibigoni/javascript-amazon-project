@@ -45,7 +45,7 @@ products.forEach((product) => {//Accumulating the result
 
             <div class="product-spacer"></div>
 
-            <div class="added-to-cart">
+            <div class="added-to-cart js-added-to-cart-${product.id}">
               <img src="images/icons/checkmark.png">
               Added
             </div>
@@ -68,16 +68,38 @@ document.querySelector('.js-products-grid')
 document.querySelectorAll('.js-add-to-cart')
 .forEach((button) => {
   
+  let addedId;
+
   button.addEventListener('click', () => {
     //Data attribute - Allows us to attach any information to an element
     
     
-    const productId = button.dataset.productId;//dataset property gives us all the data attribute attached to the button.   
-    
+    const {productId} = button.dataset;//dataset property gives us all the data attribute attached to the button.   
+
+    //Select different quantities
     const quantitySelector = document.querySelector(`.js-cart-quantity-selector-${productId}`);
     
-    const numberValue = Number(quantitySelector.value);
+    const quantity = Number(quantitySelector.value);
+
+    //show added after clicking add to cart button
+    const added = document.querySelector(`.js-added-to-cart-${productId}`);
     
+
+    added.classList.add('message');
+    
+    //Check if a previous timeoutId exists. if it does,
+    //we will stop it
+    if (addedId){
+    clearTimeout(addedId);
+    }
+
+     const timeoutId = setTimeout(() => {
+      added.classList.remove('message');
+    }, 2000)
+    
+    //Save the timeoutId so we can stop it later
+    addedId = timeoutId;
+
     let matchingItem;
     
     cart.forEach((item) => {
@@ -87,11 +109,12 @@ document.querySelectorAll('.js-add-to-cart')
     });
     
     if (matchingItem) {
-      matchingItem.quantity += numberValue;
+      matchingItem.quantity += quantity;
     } else {
       cart.push({
-        productId: productId,
-        quantity: numberValue
+        productId,
+        quantity,
+        added
       });
     }
     

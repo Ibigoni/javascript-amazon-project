@@ -1,13 +1,25 @@
-export let cart = [{//getting the product Id gets all the other information about the product (i.e, name, image, price...)
-  productId:
-  'e43638ce-6aa0-4b85-b27f-e1d07eb678c6',
-  quantity: 2,
-}, {
-  productId: 
-  '15b6fc6f-327a-4ec4-896f-486349e85a3d',
-  quantity: 1
-}];
-//This technique is called "Normalizing the data"
+export let cart = JSON.parse(localStorage.getItem('cart'));//takes one string (name of what we saved earlier). Convert to regular string
+
+
+
+if (!cart) {
+  cart = 
+  [{//getting the product Id gets all the other information about the product (i.e, name, image, price...)
+    productId:
+    'e43638ce-6aa0-4b85-b27f-e1d07eb678c6',
+    quantity: 2,
+  }, {
+    productId: 
+    '15b6fc6f-327a-4ec4-896f-486349e85a3d',
+    quantity: 1
+  }];
+  //This technique is called "Normalizing the data"
+}
+
+//Using localStorage to save the cart from reseting when refreshing the webpage
+function saveToStorage() {
+  localStorage.setItem('cart', JSON.stringify(cart));//takes two item. the name of the variable we want to save and the string(conver using JSON.stringify(variablename)).
+}
 
 export function addToCart(productId) {
    //Select different quantities
@@ -54,6 +66,8 @@ export function addToCart(productId) {
           added
         });
       }
+
+      saveToStorage();
 }
 
 
@@ -68,4 +82,6 @@ export function removeFromCart(productId) {
 
 
   cart = newCart;
+
+  saveToStorage();
 }

@@ -3,13 +3,17 @@ import {products} from '../data/products.js';
 import { formatCurrency } from './utils/money.js';
 import { removeFromCart } from '../data/cart.js';
 
+
+updateCartQuantity();
+
 let cartSummaryHTML = '';
 
 
 
 cart.forEach((cartItem) => {
   const {productId} = cartItem; //using destructuring;
-
+  
+  
 
   let matchingProduct;
 
@@ -115,7 +119,19 @@ document.querySelectorAll('.js-delete-link')
     const container = document.querySelector(
       `.js-cart-item-container-${productId}`);
      container.remove();//Every element we get from the DOM has a method called .remove();
+     updateCartQuantity(); 
   });
 });
 
+
+function updateCartQuantity() {
+  let quantity = 0;
+      
+      cart.forEach((cartItem) => {
+        quantity += cartItem.quantity;
+      });
+  
+  document.querySelector('.js-return-to-home-link')
+  .innerHTML = `${quantity} items`;
+    }
 

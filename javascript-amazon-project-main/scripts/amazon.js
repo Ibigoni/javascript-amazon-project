@@ -73,7 +73,7 @@ document.querySelector('.js-products-grid')
 function updateCartQuantity() {
 //Making cart quantity interactive
     //1. Calculate the quantity
-    let cartQuantity = 0;
+    let cartQuantity = null;
     
     cart.forEach((cartItem) => {
       cartQuantity += cartItem.quantity;
@@ -93,7 +93,6 @@ document.querySelectorAll('.js-add-to-cart')
     const {productId} = button.dataset;//dataset property gives us all the data attribute attached to the button.   
     addToCart(productId);
     updateCartQuantity();
-    
   });
 
 });

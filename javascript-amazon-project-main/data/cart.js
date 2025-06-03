@@ -1,6 +1,6 @@
 export let cart = JSON.parse(localStorage.getItem('cart'));//takes one string (name of what we saved earlier). Convert to regular string
 
-
+//if there no item in localstorage it will result to null so there need to be a default value attached as shown below.
 
 if (!cart) {
   cart = 

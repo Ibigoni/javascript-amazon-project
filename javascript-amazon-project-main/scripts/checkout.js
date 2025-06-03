@@ -8,7 +8,7 @@ let cartSummaryHTML = '';
 
 
 cart.forEach((cartItem) => {
-  const productId = cartItem.productId;
+  const {productId} = cartItem; //using destructuring;
 
 
   let matchingProduct;
@@ -109,7 +109,7 @@ document.querySelector('.js-order-summary')
 document.querySelectorAll('.js-delete-link')
 .forEach((link) => {
   link.addEventListener('click', () => {
-    const productId = link.dataset.productId;
+    const {productId} = link.dataset; //using destructuring
     removeFromCart(productId);
 
     const container = document.querySelector(

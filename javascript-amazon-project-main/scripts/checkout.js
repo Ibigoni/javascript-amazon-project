@@ -1,10 +1,12 @@
-import {cart} from '../data/cart.js';
+import {cart, removeFromCart, calculateCartQuantity} from '../data/cart.js';
 import {products} from '../data/products.js';
 import { formatCurrency } from './utils/money.js';
-import { removeFromCart } from '../data/cart.js';
+
 
 
 updateCartQuantity();
+
+
 
 let cartSummaryHTML = '';
 
@@ -12,8 +14,6 @@ let cartSummaryHTML = '';
 
 cart.forEach((cartItem) => {
   const {productId} = cartItem; //using destructuring;
-  
-  
 
   let matchingProduct;
 
@@ -46,11 +46,13 @@ cartSummaryHTML += `
             </div>
             <div class="product-quantity">
               <span>
-                Quantity: <span class="quantity-label">${cartItem.quantity}</span>
+                Quantity: <span class="quantity-label js-quantity-label">${cartItem.quantity}</span>
               </span>
-              <span class="update-quantity-link link-primary">
+              <span class="update-quantity-link link-primary js-update-link" data-product-id="${matchingProduct.id}">
                 Update
               </span>
+              <input class="quantity-input js-quantity-input">
+              <span class="save-quantity-link link-primary js-save-link" data-product-id="${matchingProduct.id}">Save</span>
               <span class="delete-quantity-link link-primary js-delete-link" data-product-id="${matchingProduct.id}">
                 Delete
               </span>
@@ -123,15 +125,39 @@ document.querySelectorAll('.js-delete-link')
   });
 });
 
-
 function updateCartQuantity() {
-  let quantity = 0;
-      
-      cart.forEach((cartItem) => {
-        quantity += cartItem.quantity;
-      });
-  
+  const cartQuantity = calculateCartQuantity();
   document.querySelector('.js-return-to-home-link')
-  .innerHTML = `${quantity} items`;
-    }
+  .innerHTML = `${cartQuantity} items`;
+}
+
+    document.querySelectorAll('.js-update-link')
+    .forEach((link) => {
+      link.addEventListener('click', () => {
+        const {productId} = link.dataset; //getting product id by using a data attribute
+        const container = document.querySelector(
+        `.js-cart-item-container-${productId}`);
+        container.classList.add('is-editing-quantity');// Added a class when clicking update button and css styling.
+      });
+    });
+
+    document.querySelectorAll('.js-save-link')
+    .forEach((link) => {
+      link.addEventListener('click', () => {
+        const {productId} = link.dataset; //getting product id by using a data attribute
+        const container = document.querySelector(
+        `.js-cart-item-container-${productId}`);
+        container.classList.remove('is-editing-quantity');//removing the class to update and reversing all css styling that were added to it.
+
+        // const quantityInput = document.querySelector('.js-quantity-input');
+        // const inputValue = Number(quantityInput.value);
+
+        // document.querySelector('.js-quantity-label').innerHTML = inputValue;
+        
+      });
+    });
+
+   
+
+
 

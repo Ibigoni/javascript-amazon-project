@@ -1,6 +1,6 @@
-import {cart, addToCart} from  '../data/cart.js';
+import {cart, addToCart, calculateCartQuantity} from  '../data/cart.js';//importing multiple variables from the same folder
 import {products} from '../data/products.js';//()..)represents the folder outside of the current folder. U can also use {cart as myCart} to rename.
-import { formatCurrency } from './utils/money.js'; 
+import {formatCurrency } from './utils/money.js'; 
 
 //Amazon data structure (arrays and objects)
  //something that closely matches the data (an array). Since each products has many values we use (an object) that will represent each data.
@@ -70,19 +70,16 @@ products.forEach((product) => {//Accumulating the result
 document.querySelector('.js-products-grid')
 .innerHTML = productsHTML;
 
+
 function updateCartQuantity() {
-//Making cart quantity interactive
-    //1. Calculate the quantity
-    let cartQuantity = null;
-    
-    cart.forEach((cartItem) => {
-      cartQuantity += cartItem.quantity;
-    });
+  //Making cart quantity interactive
+  const cartQuantity = calculateCartQuantity();
     
     //2. Put the quantity on the page
     document.querySelector('.js-cart-quantity')
     .innerHTML = cartQuantity;
 }
+
 //Using addEventListener and DOM querySelectorAll to make the Add to cart button work
 document.querySelectorAll('.js-add-to-cart')
 .forEach((button) => {
@@ -96,3 +93,4 @@ document.querySelectorAll('.js-add-to-cart')
   });
 
 });
+

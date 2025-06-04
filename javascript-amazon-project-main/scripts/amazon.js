@@ -74,10 +74,15 @@ document.querySelector('.js-products-grid')
 function updateCartQuantity() {
   //Making cart quantity interactive
   const cartQuantity = calculateCartQuantity();
-    
+
+  if (cartQuantity === 0) {
+    document.querySelector('.js-cart-quantity')
+    .innerHTML = '';
+  } else {
     //2. Put the quantity on the page
     document.querySelector('.js-cart-quantity')
     .innerHTML = cartQuantity;
+  }
 }
 
 //Using addEventListener and DOM querySelectorAll to make the Add to cart button work

@@ -1,4 +1,4 @@
-import {cart, removeFromCart, calculateCartQuantity} from '../data/cart.js';
+import {cart, removeFromCart, calculateCartQuantity, updateQuantity} from '../data/cart.js';
 import {products} from '../data/products.js';
 import { formatCurrency } from './utils/money.js';
 
@@ -46,12 +46,12 @@ cartSummaryHTML += `
             </div>
             <div class="product-quantity">
               <span>
-                Quantity: <span class="quantity-label js-quantity-label">${cartItem.quantity}</span>
+                Quantity: <span class="quantity-label js-quantity-label-${matchingProduct.id}" >${cartItem.quantity}</span>
               </span>
               <span class="update-quantity-link link-primary js-update-link" data-product-id="${matchingProduct.id}">
                 Update
               </span>
-              <input class="quantity-input js-quantity-input">
+              <input class="quantity-input js-quantity-input-${matchingProduct.id}">
               <span class="save-quantity-link link-primary js-save-link" data-product-id="${matchingProduct.id}">Save</span>
               <span class="delete-quantity-link link-primary js-delete-link" data-product-id="${matchingProduct.id}">
                 Delete
@@ -127,6 +127,7 @@ document.querySelectorAll('.js-delete-link')
 
 function updateCartQuantity() {
   const cartQuantity = calculateCartQuantity();
+
   document.querySelector('.js-return-to-home-link')
   .innerHTML = `${cartQuantity} items`;
 }
@@ -148,14 +149,23 @@ function updateCartQuantity() {
         const container = document.querySelector(
         `.js-cart-item-container-${productId}`);
         container.classList.remove('is-editing-quantity');//removing the class to update and reversing all css styling that were added to it.
+        const quantityInput = document.querySelector(`.js-quantity-input-${productId}`); //gets all classes attached with this name
+        const newQuantity = Number(quantityInput.value); //converts input value from sstring to integer.   
+        updateQuantity(productId, newQuantity);//update cart quantity to new quantity given in the input.
+        const quantityLabel = document.querySelector(
+          `.js-quantity-label-${productId}`
+        ); //added a class to the html label, unique id
+          quantityLabel.innerHTML = newQuantity
 
-        // const quantityInput = document.querySelector('.js-quantity-input');
-        // const inputValue = Number(quantityInput.value);
-
-        // document.querySelector('.js-quantity-label').innerHTML = inputValue;
+        updateCartQuantity();
         
+
+
       });
     });
+  
+
+
 
    
 

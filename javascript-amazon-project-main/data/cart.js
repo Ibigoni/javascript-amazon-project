@@ -89,7 +89,7 @@ export function removeFromCart(productId) {
 export function calculateCartQuantity() {
   //Making cart quantity interactive
     //1. Calculate the quantity
-    let cartQuantity = null;
+    let cartQuantity = 0;
     
     cart.forEach((cartItem) => {
       cartQuantity += cartItem.quantity;
@@ -99,19 +99,18 @@ export function calculateCartQuantity() {
 }
 
 
-// export function updateQuantity(productId, newQuantity) {
-//   let matchingId;
+export function updateQuantity(productId, newQuantity) {
+  let matchingId;
 
-//   cart.forEach((cartItem) => {
-//     if (productId === cartItem.productId) {
-//       matchingId = cartItem;
-//     }
-//   });
+  cart.forEach((cartItem) => {
+    if (productId === cartItem.productId) {
+      matchingId = cartItem;
+    }
+  });
 
-//   if (matchingId) {
-//     newQuantity = matchingId.quantity;
-//   }
-
-//   saveToStorage();
-// }
+  if (matchingId){
+    matchingId.quantity = newQuantity;
+  }
+  saveToStorage();
+}
 

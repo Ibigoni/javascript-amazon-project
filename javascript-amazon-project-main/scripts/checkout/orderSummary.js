@@ -4,11 +4,16 @@ import { formatCurrency } from '../utils/money.js';
 import dayjs from 'https://unpkg.com/supersimpledev@8.5.0/dayjs/esm/index.js';
 import {deliveryOptions, getDeliveryOption} from '../../data/deliveryOptions.js';
 import { renderPaymentSummary } from './paymentSummary.js';
+import renderCheckoutHeader from './checkoutHeader.js';
+
 //Default export:
 //Another way of exporting
 //We can use when we only want to export 1 thing
 
 
+// const beforeDate = today.subtract(31, 'days');
+// const beforeString = beforeDate.format('MMMM D'); 
+// console.log(beforeString);
 
 export function renderOrderSummary() {
   updateCartQuantity();
@@ -151,10 +156,7 @@ export function renderOrderSummary() {
   });
 
   function updateCartQuantity() {
-    const cartQuantity = calculateCartQuantity();
-
-    document.querySelector('.js-return-to-home-link')
-    .innerHTML = `${cartQuantity} items`;
+    renderCheckoutHeader();
   }
 
       document.querySelectorAll('.js-update-link')
@@ -191,6 +193,8 @@ export function renderOrderSummary() {
           } else if (newQuantity < 0 ) {
             alert('Not a valid quantity');
           }
+
+          renderPaymentSummary();
         });
 
 
@@ -222,6 +226,7 @@ export function renderOrderSummary() {
             alert('Not a valid quantity');
           }
         }
+        renderPaymentSummary();
 
       });
     });

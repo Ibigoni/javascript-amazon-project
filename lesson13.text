@@ -15,4 +15,10 @@ Lesson 13 part1
     - Nade the radio button to work
     - Made the text at the top "Checkout ()" to display the updated amount of items in the cart
     - Used localStorage to save the cart items
+8. External libraries = code outside of our project
+9. DayJS external library (works with data)
+10. External libriaries + JavaScript Modules, default export (Ecmascript)
+11. Created the delivery section
+12. MVS = Model - View - Controller
+13. Created the payment section.
   

@@ -147,11 +147,13 @@ export function renderOrderSummary() {
       const {productId} = link.dataset; //using destructuring
       removeFromCart(productId);
 
-      const container = document.querySelector(
-        `.js-cart-item-container-${productId}`);
-      container.remove();//Every element we get from the DOM has a method called .remove();
+      // const container = document.querySelector(
+      //   `.js-cart-item-container-${productId}`);
+      // container.remove();//Every element we get from the DOM has a method called .remove();
       updateCartQuantity(); 
       renderPaymentSummary();
+      renderOrderSummary(); 
+      renderCheckoutHeader();
     });
   });
 

@@ -7,8 +7,8 @@ const todayDate = today.add(date, 'days');
 const dateString = todayDate.format('dddd');
 
 let displayWeekend = dateString === 'Saturday' || dateString === 'Sunday' 
-?  `It is the weekend because it is ${dateString}`
-: `It is not the weeked(${dateString})`
+?  `No delivery during weekends. Enjoy your ${dateString}, we'll be delivering your order on the next available business day`
+: `Your delivery date will be (${dateString})`
 
 // if (dateString === 'Saturday' || dateString === 'Sunday' ){
 //   check = true;

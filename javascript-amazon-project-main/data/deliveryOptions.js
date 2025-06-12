@@ -23,3 +23,23 @@ export function getDeliveryOption(deliveryOptionId) {
 
   return deliveryOption || deliveryOptions[0]
 }
+
+export function calculateDeliveryDate(deliveryOption) {
+  const today = dayjs();
+  const newDeliveryDays = skipWeekendDays(deliveryOption.deliveryDays)
+  const deliveryDate = today.add(newDeliveryDays, 'd')
+  const datestring = deliveryDate.format('dddd, MMMM D')
+
+  return datestring
+}
+
+function skipWeekendDays(deliveryDays) {
+  const today = dayjs();
+  for (let i = 1; i <= deliveryDays; i++) {
+    const weekDay = today.add(i, 'd').format('dddd')
+    if (weekDay === 'Saturday' || weekDay === 'Sunday') {
+      deliveryDays++
+    }
+  }
+  return deliveryDays
+}

@@ -65,7 +65,6 @@ export function addToCart(productId) {
         cart.push({
           productId,
           quantity,
-          added,
           deliveryOptionId: '1'
         });
       }
@@ -126,8 +125,10 @@ export function updateDeliveryOption(productId, deliveryOptionId) {
     }
   });
 
-  matchingItem.deliveryOptionId = deliveryOptionId
-
-  saveToStorage();
+  if(matchingItem){
+    matchingItem.deliveryOptionId = deliveryOptionId
+  
+    saveToStorage();
+  }
 }
 

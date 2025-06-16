@@ -1,4 +1,4 @@
-import formatCurrency from '../javascript-amazon-project-main/scripts/utils/money.js';
+import formatCurrency from '../scripts/utils/money.js';
 
 //Automated testing
 //Testing different test cases (basic and edge test case)

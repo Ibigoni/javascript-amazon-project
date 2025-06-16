@@ -24,18 +24,15 @@ function saveToStorage() {
 }
 
 export function addToCart(productId) {
-   //Select different quantities
-
-    let addedId;
-
-    const quantitySelector = document.querySelector(`.js-cart-quantity-selector-${productId}`);
+  const quantitySelector = document.querySelector(`.js-cart-quantity-selector-${productId}`);
     
-    const quantity = Number(quantitySelector.value);
+  const quantity = Number(quantitySelector.value);
+  //Select different quantities
+    let addedId;
 
     //show added after clicking add to cart button
     const added = document.querySelector(`.js-added-to-cart-${productId}`);
     
-
     added.classList.add('message');
     
     //Check if a previous timeoutId exists. if it does,
@@ -68,6 +65,7 @@ export function addToCart(productId) {
           deliveryOptionId: '1'
         });
       }
+       
 
       saveToStorage();
 }

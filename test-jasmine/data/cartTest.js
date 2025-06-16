@@ -1,4 +1,4 @@
-import { addToCart, cart } from '../../javascript-amazon-project-main/data/cart';
+import { addToCart, cart } from '../../data/cart';
 
 describe('test suite: addToCart', () => {
   it('adds an existing product to the cart', () => {

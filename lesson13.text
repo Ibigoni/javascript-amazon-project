@@ -21,4 +21,15 @@ Lesson 13 part1
 11. Created the delivery section
 12. MVS = Model - View - Controller
 13. Created the payment section.
+
+Lesson16
+In this lesson:
+1. Manual and automated tests
+2. Test cases and test suites
+3. Testing Framework
+  = helps us write tests easier
+4. Mock and spy on methods
+5. Test web pages using integration tests
+6. Hooks (beforeEach(), afterEach(), beforeAll(), and afterAll())
+
   

@@ -37,3 +37,15 @@ if(formatCurrency(2000.4) === '20.00') {//edge case testing (if it rounds down c
   console.log('failed'); 
 }
 
+console.log('rounding negative number')
+if (formatCurrency(-2000.5) === '-20.00' ) {
+  console.log('passed');
+} else {
+  console.log('failed');
+}
+
+if (formatCurrency(-2999.5) === '-29.99') {
+  console.log('passed');
+} else {
+  console.log('failed');
+}

@@ -51,3 +51,5 @@ describe('test suite: addToCart', () => {
     expect(cart[0].quantity).toEqual(1);
   });
 });
+// expect(localStorage.setItem).toHaveBeenCalledWith('cart', '[]'); Expected spy setItem to have been called with:
+//[ 'cart', '[]' ]

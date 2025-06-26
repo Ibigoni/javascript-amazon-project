@@ -33,7 +33,7 @@ describe('test suit: renderOrderSummary', () => {
         renderOrderSummary();
   });
   afterEach(() => {
-    document.querySelector('.js-test-container').innerHTML = ``;
+    //document.querySelector('.js-test-container').innerHTML = ``;
   });
 
 
@@ -47,6 +47,9 @@ describe('test suit: renderOrderSummary', () => {
       expect(
         document.querySelector(`.js-product-quantity-${productId2}`).innerText
       ).toContain('Quantity: 1')
+      expect(
+        document.querySelector('.js-product-name').innerText
+      ).toContain('Black and Gray Athletic Cotton Socks - 6 Pairs');
   });
 
   it('removes a product', () => {
@@ -62,5 +65,8 @@ describe('test suit: renderOrderSummary', () => {
       ).not.toEqual(null);
       expect(cart.length).toEqual(1);//the cart length is correct
       expect(cart[0].productId).toEqual(productId2);//the product Id is correct
+      expect(
+        document.querySelector('.js-product-name').innerText
+      ).toContain('Intermediate Size Basketball');
   });
 });

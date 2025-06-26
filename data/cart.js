@@ -26,7 +26,7 @@ export function loadFromStorage() {
 
 //Using localStorage to save the cart from reseting when refreshing the webpage
 function saveToStorage() {
-  localStorage.setItem('cart', JSON.stringify(cart));//takes two item. the name of the variable we want to save and the string(conver using JSON.stringify(variablename)).
+  localStorage.setItem('cart', JSON.stringify(cart));//takes two item. the name of the variable we want to save and the string(convert using JSON.stringify(variablename)).
 }
 
 export function addToCart(productId) {

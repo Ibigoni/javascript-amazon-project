@@ -1,3 +1,4 @@
+//Procedural Programming
 export let cart;
 
 loadFromStorage();

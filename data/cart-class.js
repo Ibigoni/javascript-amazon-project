@@ -2,11 +2,11 @@
 
 class Cart {
   cartItems;
-  #localStorageKey;
+  #localStorageKey; //private property with "#"
 
   constructor(localStorageKey) {
   //Give variable from the cart class instances
-  this.localStorageKey = localStorageKey;
+  this.#localStorageKey = localStorageKey;
 
   //running a function from the class
   this.#loadFromStorage();

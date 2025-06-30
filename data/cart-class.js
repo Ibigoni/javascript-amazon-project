@@ -2,18 +2,18 @@
 
 class Cart {
   cartItems;
-  localStorageKey;
+  #localStorageKey;
 
   constructor(localStorageKey) {
   //Give variable from the cart class instances
   this.localStorageKey = localStorageKey;
 
   //running a function from the class
-  this.loadFromStorage();
+  this.#loadFromStorage();
   }
 
-  loadFromStorage() {//: function() {shorthand Method Syntax
-      this.cartItems = JSON.parse(localStorage.getItem(localStorageKey));//takes one string (name of what we saved earlier). Convert to regular string
+  #loadFromStorage() {//: function() {shorthand Method Syntax
+      this.cartItems = JSON.parse(localStorage.getItem(this.#localStorageKey));//takes one string (name of what we saved earlier). Convert to regular string
           //if there no item in localstorage it will result to null so there need to be a default value attached as shown below.
   
           if (!this.cartItems) {
@@ -35,7 +35,7 @@ class Cart {
 
   //Using localStorage to save the cart from reseting when refreshing the webpage
   saveToStorage() {
-    localStorage.setItem(localStorageKey, JSON.stringify(this.cartItems));//takes two item. the name of the variable we want to save and the string(convert using JSON.stringify(variablename)).
+    localStorage.setItem(this.#localStorageKey, JSON.stringify(this.cartItems));//takes two item. the name of the variable we want to save and the string(convert using JSON.stringify(variablename)).
   }
 
   addToCart(productId) {
@@ -147,6 +147,7 @@ class Cart {
 //creating new classes of the cart class
 const cart = new Cart('cart-oop'); 
 const businessCart = new Cart('cart-business');
+
 
 
 console.log(cart);

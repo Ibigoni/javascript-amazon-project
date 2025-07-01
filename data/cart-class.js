@@ -1,7 +1,7 @@
 //CLASSES//Object Oriented Programming - Group all data and functions into an object
 
 class Cart {
-  cartItems;
+  cartItems; //public property
   #localStorageKey; //private property with "#"
 
   constructor(localStorageKey) {
@@ -12,7 +12,7 @@ class Cart {
   this.#loadFromStorage();
   }
 
-  #loadFromStorage() {//: function() {shorthand Method Syntax
+  #loadFromStorage() {//: function() {shorthand Method Syntax also a private method
       this.cartItems = JSON.parse(localStorage.getItem(this.#localStorageKey));//takes one string (name of what we saved earlier). Convert to regular string
           //if there no item in localstorage it will result to null so there need to be a default value attached as shown below.
   

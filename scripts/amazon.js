@@ -31,7 +31,7 @@ products.forEach((product) => {//Accumulating the result
             </div>
 
             <div class="product-price">
-              $${product.getPrice()}
+              ${product.getPrice()}
             </div>
 
             <div class="product-quantity-container">
@@ -48,6 +48,8 @@ products.forEach((product) => {//Accumulating the result
                 <option value="10">10</option>
               </select>
             </div>
+            
+            ${product.extraInfoHTML()}
 
             <div class="product-spacer"></div>
 

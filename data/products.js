@@ -34,9 +34,32 @@ class Product {
   getPrice() {
    return `$${formatCurrency(this.priceCents)}`;
   }
+
+  extraInfoHTML() {
+    return '';
+  }
 }
 
+//Using inheritance
+class Clothing extends Product{
+  sizeChartLink;
 
+  constructor(productDetails) {
+    super(productDetails); //calling the parent class constructor
+    this.sizeChartLink = productDetails.sizeChartLink
+  }
+
+  //generate HTML that oontains extra information about the product
+  extraInfoHTML() {
+    //Another way to call the parents method
+    //super.extraInfoHTML();
+    return `
+      <a href="${this.sizeChartLink}" target="_blank">
+      Size chart
+      </a>
+    `;
+  }
+} 
 
 export const products = [
   {
@@ -745,6 +768,10 @@ export const products = [
     ]
   }
 ].map((productDetails) => {//Map loops through an array and for each value it runs a function.
+  //assign clothing type class to product with that type
+  if (productDetails.type === 'clothing') {
+    return new Clothing(productDetails);
+  }
   return new Product(productDetails);//.map creates a new array and whatever we return from the inner function will go inside that array
 });
 //Each product in products is now an instanceof of the "class Product"

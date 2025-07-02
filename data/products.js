@@ -61,6 +61,7 @@ class Clothing extends Product{
   }
 } 
 
+
 /*
 const date = new Date();//built in class
 console.log(date);

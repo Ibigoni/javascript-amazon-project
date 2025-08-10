@@ -1,103 +1,106 @@
 import {cart, addToCart, calculateCartQuantity} from  '../data/cart.js';//importing multiple variables from the same folder
-import {products} from '../data/products.js';//()..)represents the folder outside of the current folder. U can also use {cart as myCart} to rename.
+import {products, loadProducts} from '../data/products.js';//()..)represents the folder outside of the current folder. U can also use {cart as myCart} to rename.
 import {formatCurrency } from './utils/money.js'; 
 
 //Amazon data structure (arrays and objects)
  //something that closely matches the data (an array). Since each products has many values we use (an object) that will represent each data.
 
+ loadProducts(renderProductsGrid); // This is a callback function
+
+function renderProductsGrid() {
+
  updateCartQuantity();
+  //Combining all the html together into one string and put it on the web page
+  let productsHTML = '';
 
-//Combining all the html together into one string and put it on the web page
-let productsHTML = '';
-
-products.forEach((product) => {//Accumulating the result
-  productsHTML += `
-    <div class="product-container">
-            <div class="product-image-container">
-              <img class="product-image"
-                src="${product.image}">
-            </div>
-
-            <div class="product-name limit-text-to-2-lines">
-              ${product.name}
-            </div>
-
-            <div class="product-rating-container">
-              <img class="product-rating-stars"
-                src="${product.getStarsUrl()}">
-              <div class="product-rating-count link-primary">
-                ${product.rating.count}
+  products.forEach((product) => {//Accumulating the result
+    productsHTML += `
+      <div class="product-container">
+              <div class="product-image-container">
+                <img class="product-image"
+                  src="${product.image}">
               </div>
-            </div>
 
-            <div class="product-price">
-              ${product.getPrice()}
-            </div>
+              <div class="product-name limit-text-to-2-lines">
+                ${product.name}
+              </div>
 
-            <div class="product-quantity-container">
-              <select class="js-cart-quantity-selector-${product.id}">
-                <option selected value="1">1</option>
-                <option value="2">2</option>
-                <option value="3">3</option>
-                <option value="4">4</option>
-                <option value="5">5</option>
-                <option value="6">6</option>
-                <option value="7">7</option>
-                <option value="8">8</option>
-                <option value="9">9</option>
-                <option value="10">10</option>
-              </select>
-            </div>
-            
-            ${product.extraInfoHTML()}
+              <div class="product-rating-container">
+                <img class="product-rating-stars"
+                  src="${product.getStarsUrl()}">
+                <div class="product-rating-count link-primary">
+                  ${product.rating.count}
+                </div>
+              </div>
 
-            <div class="product-spacer"></div>
+              <div class="product-price">
+                ${product.getPrice()}
+              </div>
 
-            <div class="added-to-cart js-added-to-cart-${product.id}">
-              <img src="images/icons/checkmark.png">
-              Added
-            </div>
+              <div class="product-quantity-container">
+                <select class="js-cart-quantity-selector-${product.id}">
+                  <option selected value="1">1</option>
+                  <option value="2">2</option>
+                  <option value="3">3</option>
+                  <option value="4">4</option>
+                  <option value="5">5</option>
+                  <option value="6">6</option>
+                  <option value="7">7</option>
+                  <option value="8">8</option>
+                  <option value="9">9</option>
+                  <option value="10">10</option>
+                </select>
+              </div>
+              
+              ${product.extraInfoHTML()}
 
-            <button class="add-to-cart-button button-primary js-add-to-cart"
-            data-product-id="${product.id}">
-              Add to Cart
-            </button>
-      </div>
-  `;
-});
+              <div class="product-spacer"></div>
 
+              <div class="added-to-cart js-added-to-cart-${product.id}">
+                <img src="images/icons/checkmark.png">
+                Added
+              </div>
 
-//Using .toFixed() - will convert a number to string and can tell it how many decimal we want in the bracket.
-//Generating the html and using the DOM to put the html on the webpage
-document.querySelector('.js-products-grid')
-.innerHTML = productsHTML;
-
-
-function updateCartQuantity() {
-  //Making cart quantity interactive
-  const cartQuantity = calculateCartQuantity();
-
-  if (cartQuantity === 0) {
-    document.querySelector('.js-cart-quantity')
-    .innerHTML = '';
-  } else {
-    //2. Put the quantity on the page
-    document.querySelector('.js-cart-quantity')
-    .innerHTML = cartQuantity;
-  }
-}
-
-//Using addEventListener and DOM querySelectorAll to make the Add to cart button work
-document.querySelectorAll('.js-add-to-cart')
-.forEach((button) => {
-
-  button.addEventListener('click', () => {
-    //Data attribute - Allows us to attach any information to an element
-  
-    const {productId} = button.dataset;//dataset property gives us all the data attribute attached to the button.   
-    addToCart(productId);
-    updateCartQuantity();
+              <button class="add-to-cart-button button-primary js-add-to-cart"
+              data-product-id="${product.id}">
+                Add to Cart
+              </button>
+        </div>
+    `;
   });
 
-});
 
+  //Using .toFixed() - will convert a number to string and can tell it how many decimal we want in the bracket.
+  //Generating the html and using the DOM to put the html on the webpage
+  document.querySelector('.js-products-grid')
+  .innerHTML = productsHTML;
+
+
+  function updateCartQuantity() {
+    //Making cart quantity interactive
+    const cartQuantity = calculateCartQuantity();
+
+    if (cartQuantity === 0) {
+      document.querySelector('.js-cart-quantity')
+      .innerHTML = '';
+    } else {
+      //2. Put the quantity on the page
+      document.querySelector('.js-cart-quantity')
+      .innerHTML = cartQuantity;
+    }
+  }
+
+  //Using addEventListener and DOM querySelectorAll to make the Add to cart button work
+  document.querySelectorAll('.js-add-to-cart')
+  .forEach((button) => {
+
+    button.addEventListener('click', () => {
+      //Data attribute - Allows us to attach any information to an element
+    
+      const {productId} = button.dataset;//dataset property gives us all the data attribute attached to the button.   
+      addToCart(productId);
+      updateCartQuantity();
+    });
+
+  });
+}

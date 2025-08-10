@@ -110,7 +110,35 @@ const object3 = {
 };
 object3.method();
 */
+export let products = [];
 
+export function loadProducts (fun) {//this param contains a funciton
+  const xhr = new XMLHttpRequest();
+
+  xhr.addEventListener('load', () => {
+      //convert it back to a javaScript object
+      products = JSON.parse(xhr.response).map((productDetails) => {//Map loops through an array and for each value it runs a function.
+
+      //assign clothing type class to product with that type
+      if (productDetails.type === 'clothing') {
+        return new Clothing(productDetails);
+      } else if (productDetails.type === 'appliance') {
+        return new Appliance(productDetails);
+      }
+      return new Product(productDetails);//.map creates a new array and whatever we return from the inner function will go inside that array
+    }); 
+
+    console.log(products);
+
+    fun();
+  });
+
+  xhr.open('GET','https://supersimplebackend.dev/products');
+  xhr.send();
+}
+
+
+/*
 export const products = [
   {
     id: "e43638ce-6aa0-4b85-b27f-e1d07eb678c6",
@@ -841,3 +869,4 @@ export const products = [
 //Each product in products is now an instanceof of the "class Product"
 console.log(products[3]);
 console.log(products[2]);
+*/

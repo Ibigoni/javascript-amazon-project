@@ -18,17 +18,20 @@ import renderCheckoutHeader from './checkoutHeader.js';
 export function renderOrderSummary() {
   let cartSummaryHTML = '';
 
-
-
   cart.forEach((cartItem) => {
     const {productId} = cartItem; //using destructuring;
 
     const matchingProduct = getProduct(productId);
+    // safety check
+    // if (!matchingProduct) {
+    //   console.error(`Product not found for productId: ${productId}`);
+    //   return; // Skip rendering this cart item
+    // }
 
 
     const deliveryOptionId = cartItem.deliveryOptionId;
   
-     const deliveryOption = getDeliveryOption(deliveryOptionId);
+    const deliveryOption = getDeliveryOption(deliveryOptionId);
 
     const dateString = calculateDeliveryDate(deliveryOption);
 

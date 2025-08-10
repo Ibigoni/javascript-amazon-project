@@ -10,6 +10,11 @@ let shippingPriceCents = 0;
 
   cart.forEach((cartItem) => {
     const product = getProduct(cartItem.productId);
+    // safety check
+    // if (!product) {
+    //   //Handle missing product (optional: log, skip, or throw)
+    //   return;
+    // }
     productPriceCents += product.priceCents * cartItem.quantity
 
     const deliveryOption = getDeliveryOption(cartItem.deliveryOptionId);

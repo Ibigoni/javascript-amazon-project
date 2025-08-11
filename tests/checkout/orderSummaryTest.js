@@ -9,7 +9,7 @@ describe('test suit: renderOrderSummary', () => {
   
   //Runs before all the test
   //Use done() when testing backend. This can be used in beforeEach, and it as well.
-  beforeAll((done) => {//done is a function provided by jasmine. When added beforeAll won't go to the next stop until done is called again.
+  beforeAll((done) => {//done is a function provided by jasmine. When added beforeAll won't go to the next step until done is called again.
   //done() lets us control when to go to the next step
     loadProducts(() => {
       done();

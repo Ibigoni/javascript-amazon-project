@@ -112,9 +112,38 @@ object3.method();
 */
 export let products = [];
 
+export function loadProductsFetch() {
+  //makes an HTTP request and has a GET default request
+  const promise = fetch(
+    'https://supersimplebackend.dev/products'
+  ).then((response) => {
+    return response.json(); //this gives us the json/data attached to the response. It's Async so it returns a promise
+  }).then((productsData) => {
+      products = productsData.map((productDetails) => {
+      if (productDetails.type === 'clothing') {
+        return new Clothing(productDetails);
+      } else if (productDetails.type === 'appliance') {
+        return new Appliance(productDetails);
+      }
+      return new Product(productDetails);
+    }); 
+
+    console.log('load products');
+  });
+
+  return promise;
+}
+/*
+loadProductsFetch().then(() => {
+  console.log('next step');
+});
+*/
+
+
 export function loadProducts (fun) {//this param contains a funciton
   const xhr = new XMLHttpRequest();
 
+  //uses a callback to get the response
   xhr.addEventListener('load', () => {
       //convert it back to a javaScript object
       products = JSON.parse(xhr.response).map((productDetails) => {//Map loops through an array and for each value it runs a function.

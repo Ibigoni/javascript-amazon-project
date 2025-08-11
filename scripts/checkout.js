@@ -1,7 +1,7 @@
 import { renderOrderSummary } from './checkout/orderSummary.js';
 import { renderPaymentSummary } from './checkout/paymentSummary.js';
 import renderCheckoutHeader from './checkout/checkoutHeader.js';
-import { loadProducts } from '../data/products.js';
+import { loadProducts, loadProductsFetch } from '../data/products.js';
 import { loadCart } from '../data/cart.js';
 // import '../data/car.js';
 // import '../data/backend-practice.js';
@@ -10,12 +10,7 @@ import { loadCart } from '../data/cart.js';
 // Promise lets us have as many steps as we want and we can use "resolve()" to wait for each step to finish before going to the next step
 
 Promise.all([//promise.all handles an array of promises
-  new Promise((resolve) => {
-    loadProducts(() => {
-      resolve('value1');//similar to the done() function which lets us control when to go to the next step
-    });
-  }),
-
+  loadProductsFetch(),
   new Promise((resolve) => {
     loadCart(() => {
       resolve();

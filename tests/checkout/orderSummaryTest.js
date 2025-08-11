@@ -1,6 +1,6 @@
 import { renderOrderSummary } from "../../scripts/checkout/orderSummary.js";
 import { loadFromStorage, cart } from '../../data/cart.js';
-import {loadProducts} from '../../data/products.js'
+import {loadProducts, loadProductsFetch} from '../../data/products.js'
 
 
 describe('test suit: renderOrderSummary', () => {
@@ -11,9 +11,9 @@ describe('test suit: renderOrderSummary', () => {
   //Use done() when testing backend. This can be used in beforeEach, and it as well.
   beforeAll((done) => {//done is a function provided by jasmine. When added beforeAll won't go to the next step until done is called again.
   //done() lets us control when to go to the next step
-    loadProducts(() => {
+    loadProductsFetch().then(() => {
       done();
-    });//Asynchronous code
+    });
   });
 
   beforeEach(() => {

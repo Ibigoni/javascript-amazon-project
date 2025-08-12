@@ -117,8 +117,9 @@ export function loadProductsFetch() {
   const promise = fetch(
     'https://supersimplebackend.dev/products'
   ).then((response) => {
+    //returning the promise waits for the promise to finish before going to the next step
     return response.json(); //this gives us the json/data attached to the response. It's Async so it returns a promise
-  }).then((productsData) => {
+  }).then((productsData) => {//automatically does JSON.parse()
       products = productsData.map((productDetails) => {
       if (productDetails.type === 'clothing') {
         return new Clothing(productDetails);
@@ -126,7 +127,7 @@ export function loadProductsFetch() {
         return new Appliance(productDetails);
       }
       return new Product(productDetails);
-    }); 
+    });
 
     console.log('load products');
   });

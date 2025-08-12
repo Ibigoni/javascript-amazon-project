@@ -10,7 +10,7 @@ import { loadCart } from '../data/cart.js';
 // Promise lets us have as many steps as we want and we can use "resolve()" to wait for each step to finish before going to the next step
 
 Promise.all([//promise.all handles an array of promises
-  loadProductsFetch(),
+  loadProductsFetch(),//fetch makes our code a lot cleaner
   new Promise((resolve) => {
     loadCart(() => {
       resolve();

@@ -88,7 +88,7 @@ let shippingPriceCents = 0;
         })
       });
 
-      const order = await response.json(); //response.json() is also a promist so we need to use await before going to the next line
+      const order = await response.json(); //response.json() is also a promise so we need to use await before going to the next line
       addOrder(order);
 
     } catch (error) {

@@ -9,6 +9,38 @@ import { loadCart } from '../data/cart.js';
 // Promise is a class that takes in a callback function
 // Promise lets us have as many steps as we want and we can use "resolve()" to wait for each step to finish before going to the next step
 
+/*
+*async = makes a function returns a promise
+*The point of this feature lets us use the second feature called "await"
+*We can onlu use "await" inside an async function
+*/
+
+async function loadPage() {
+  await loadProductsFetch()//instead of using .then to wait for the code to finish, awai lets us write asynchronous code like normal code.
+
+  await new Promise((resolve) => {
+    loadCart(() => {
+      resolve();
+    });
+  })
+
+  /*
+   const value = await new Promise((resolve) => {
+    loadCart(() => {
+      resolve('value3'); //this value gets returned and can be saved in a variable when using "await"
+    });
+  })
+    */
+
+  renderOrderSummary();
+  renderPaymentSummary();
+  renderCheckoutHeader();
+
+//   return 'value2'; //this gets converted into resolve('value2');
+}
+loadPage();
+
+/*
 Promise.all([//promise.all handles an array of promises
   loadProductsFetch(),//fetch makes our code a lot cleaner
   new Promise((resolve) => {
@@ -24,6 +56,7 @@ Promise.all([//promise.all handles an array of promises
     renderPaymentSummary();
     renderCheckoutHeader();
 });
+*/
 
 /*
 new Promise((resolve) => {

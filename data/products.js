@@ -130,10 +130,15 @@ export function loadProductsFetch() {
     });
 
     console.log('load products');
+
+    //handle error in promises, runs this funciton is there is an error
+  }).catch(() => {
+    console.log('Unexpected error. Please try again later.');
   });
 
-  return promise;
+  return promise;t
 }
+
 /*
 loadProductsFetch().then(() => {
   console.log('next step');
@@ -158,14 +163,20 @@ export function loadProducts (fun) {//this param contains a funciton
       return new Product(productDetails);//.map creates a new array and whatever we return from the inner function will go inside that array
     }); 
 
-    console.log(products);
+    console.log('load product');
 
     fun();
+  });
+
+  //Error handling for callbacks
+  xhr.addEventListener('error', (error) => {//usually contains information about the error.
+    console.log('Unexpected error. Please try again later.'); 
   });
 
   xhr.open('GET','https://supersimplebackend.dev/products');
   xhr.send();
 }
+
 
 
 /*

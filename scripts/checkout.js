@@ -16,28 +16,41 @@ import { loadCart } from '../data/cart.js';
 */
 
 async function loadPage() {
-  await loadProductsFetch()//instead of using .then to wait for the code to finish, awai lets us write asynchronous code like normal code.
+  //Error handling for async await "try/catch". codes that may potentially cause an error.
+  try{
+    // throw 'error1'; //manually creates an error using "throw". Attached to it could be a string, number or object. 
+    //When we get the error it skips the rest of the code and goes straight to catch.
+    await loadProductsFetch()//instead of using .then to wait for the code to finish, await lets us write asynchronous code like normal code.
 
-  await new Promise((resolve) => {
-    loadCart(() => {
-      resolve();
-    });
-  })
+    await new Promise((resolve, reject) => {
+      loadCart(() => {
+        // reject('error3');
+        resolve();
+      });
+    })
 
+  } catch (error) {//gets on param in the brackets called error.
+    console.log('Unexpected error. Please try again later.');
+  }
+  
   /*
-   const value = await new Promise((resolve) => {
+    //reject() is a function that lets us create an error in the future
+   const value = await new Promise((resolve, reject) => {
+    // throw 'error2'; //this goes in to catch like a synchronous code
     loadCart(() => {
-      resolve('value3'); //this value gets returned and can be saved in a variable when using "await"
+      reject('error3');
+      // resolve('value3'); //this value gets returned and can be saved in a variable when using "await"
     });
   })
     */
+    
 
   renderOrderSummary();
   renderPaymentSummary();
   renderCheckoutHeader();
 
 //   return 'value2'; //this gets converted into resolve('value2');
-}
+} 
 loadPage();
 
 /*

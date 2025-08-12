@@ -88,5 +88,17 @@
         </div>
       </div>
     </div>
+
+    <script>
+
+      //URL parameters = search parameters, lets us save datat directly in the URL
+
+      //Analyzes the URL
+      const url = new URL(window.location.href)
+      //This will let us get the URL parameters.
+      //.get() lets us get individual parameter.
+      console.log(url.searchParams.get('orderId'));
+      console.log(url.searchParams.get('productId'));
+    </script>
   </body>
 </html>

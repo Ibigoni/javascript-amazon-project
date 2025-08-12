@@ -42,5 +42,20 @@ In this lesson: OOP
 5. Inheritance
 6. Method overriding & polymorphism
 
+Lesson 17-18
+1. Backend and HTTP
+2. XMLHTTPRequest and fetch()
+3. Asynchronouse code
+    Callbacks, promises, async await
+4. How to test asynchronous code
+5. Error handling
+6. Use the backend in our project
+7. URL parameters
+
+
+Next step
+Learn how to create our own backend
+1. Command Line
+2. NodeJS = create our own backend
 
   

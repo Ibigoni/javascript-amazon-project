@@ -23,12 +23,9 @@ loadedText();
 
 //18c
 async function loadText() {
-  await fetch('https://supersimplebackend.dev/greeting').then((response) => {
-    return response.text();
-  }).then((someText) => {
-    console.log(someText);
-  });
-
+  const response = await fetch('https://supersimplebackend.dev/greeting');
+  const someText = await response.text();
+  console.log(someText);
 }
 
 loadText();

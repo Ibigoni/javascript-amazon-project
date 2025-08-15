@@ -2,9 +2,8 @@ import { renderOrderSummary } from './checkout/orderSummary.js';
 import { renderPaymentSummary } from './checkout/paymentSummary.js';
 import renderCheckoutHeader from './checkout/checkoutHeader.js';
 import { loadProducts, loadProductsFetch } from '../data/products.js';
-import { loadCart } from '../data/cart.js';
-// import '../data/car.js';
-// import '../data/backend-practice.js';
+import { loadCart, loadCartFetch } from '../data/cart.js';
+import { orders } from '../data/orders.js';
 
 // Promise is a class that takes in a callback function
 // Promise lets us have as many steps as we want and we can use "resolve()" to wait for each step to finish before going to the next step
@@ -15,19 +14,34 @@ import { loadCart } from '../data/cart.js';
 *We can onlu use "await" inside an async function
 */
 
+orders.forEach(order => {
+  order.products.forEach(product => {
+    const estimatedDeliveryDate = product.estimatedDeliveryTime;
+    console.log(estimatedDeliveryDate);
+  });
+})
+
 async function loadPage() {
   //Error handling for async await "try/catch". codes that may potentially cause an error.
   try{
     // throw 'error1'; //manually creates an error using "throw". Attached to it could be a string, number or object. 
+    await Promise.all([
+      loadProductsFetch(),
+      loadCartFetch()
+    ]);
     //When we get the error it skips the rest of the code and goes straight to catch.
-    await loadProductsFetch()//instead of using .then to wait for the code to finish, await lets us write asynchronous code like normal code.
+   // await loadProductsFetch()//instead of using .then to wait for the code to finish, await lets us write asynchronous code like normal code.
 
+    //await loadCartFetch();
+    
+    /*
     await new Promise((resolve, reject) => {
       loadCart(() => {
         // reject('error3');
         resolve();
       });
     })
+      */
 
   } catch (error) {//gets on param in the brackets called error.
     console.log('Unexpected error. Please try again later.');

@@ -1,7 +1,7 @@
 export const orders = JSON.parse(localStorage.getItem('orders')) || [];
 
 export function addOrder (order) {
-  orders.unshift(order);//adds order to the fron tof the array instead of the back
+  orders.unshift(order);//adds order to the front of the array instead of the back
   saveToStorage();
 }
 

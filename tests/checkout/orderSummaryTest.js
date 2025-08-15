@@ -9,12 +9,18 @@ describe('test suit: renderOrderSummary', () => {
   
   //Runs before all the test
   //Use done() when testing backend. This can be used in beforeEach, and it as well.
+
+  beforeAll(async () => {
+    await loadProductsFetch()
+  });
+  /*
   beforeAll((done) => {//done is a function provided by jasmine. When added beforeAll won't go to the next step until done is called again.
   //done() lets us control when to go to the next step
     loadProductsFetch().then(() => {
       done();
     });
   });
+  */
 
   beforeEach(() => {
      spyOn(localStorage, 'setItem');

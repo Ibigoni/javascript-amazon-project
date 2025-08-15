@@ -3,4 +3,5 @@ export function formatCurrency(priceCents) {
 } //this function will be shared between checkout.js and amazon.js
 
 
-export default formatCurrency;//with this we wont need {} when importing the name. However, each file can only have ` default export.
+//with this we wont need {} when importing the name. However, each file can only have ` default export.
+export default formatCurrency;

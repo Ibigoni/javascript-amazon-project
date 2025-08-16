@@ -1,15 +1,15 @@
-import {cart, addToCart, calculateCartQuantity} from  '../data/cart.js';//importing multiple variables from the same folder
-import {products, loadProducts} from '../data/products.js';//()..)represents the folder outside of the current folder. U can also use {cart as myCart} to rename.
+import {cart, addToCart, calculateCartQuantity, updateCartQuantity} from  '../data/cart.js';//importing multiple variables from the same folder
+import {products, loadProducts, loadProductsFetch} from '../data/products.js';//()..)represents the folder outside of the current folder. U can also use {cart as myCart} to rename.
 import {formatCurrency } from './utils/money.js'; 
 
 //Amazon data structure (arrays and objects)
  //something that closely matches the data (an array). Since each products has many values we use (an object) that will represent each data.
 
- loadProducts(renderProductsGrid); // This is a callback function
+// loadProducts(renderProductsGrid); // This is a callback function
 
-function renderProductsGrid() {
-
- updateCartQuantity();
+async function renderProductsGrid() {
+ await loadProductsFetch();
+ document.querySelector('.js-cart-quantity').innerHTML = calculateCartQuantity();
   //Combining all the html together into one string and put it on the web page
   let productsHTML = '';
 
@@ -76,20 +76,6 @@ function renderProductsGrid() {
   .innerHTML = productsHTML;
 
 
-  function updateCartQuantity() {
-    //Making cart quantity interactive
-    const cartQuantity = calculateCartQuantity();
-
-    if (cartQuantity === 0) {
-      document.querySelector('.js-cart-quantity')
-      .innerHTML = '';
-    } else {
-      //2. Put the quantity on the page
-      document.querySelector('.js-cart-quantity')
-      .innerHTML = cartQuantity;
-    }
-  }
-
   //Using addEventListener and DOM querySelectorAll to make the Add to cart button work
   document.querySelectorAll('.js-add-to-cart')
   .forEach((button) => {
@@ -104,3 +90,5 @@ function renderProductsGrid() {
 
   });
 }
+
+renderProductsGrid();

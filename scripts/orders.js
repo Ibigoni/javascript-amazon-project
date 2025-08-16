@@ -2,7 +2,8 @@ import { orders } from '../data/orders.js';
 import formatCurrency from './utils/money.js';
 import dayjs from 'https://unpkg.com/supersimpledev@8.5.0/dayjs/esm/index.js';
 import { getProduct, loadProductsFetch } from '../data/products.js';
-import { addToCart } from '../data/cart.js';
+import { addToCart, updateCartQuantity, buyAgain } from '../data/cart.js';
+import { cart, resetCartQuantity } from '../data/cart.js';
 
 async function loadPage(){
   await loadProductsFetch();
@@ -89,19 +90,23 @@ async function loadPage(){
       return productsListHTML;
 }
 
-document.querySelector('.js-orders-grid').innerHTML = ordersHTML;
+  document.querySelector('.js-orders-grid').innerHTML = ordersHTML;
 
+  
+  resetCartQuantity()
+
+  document.querySelector('.js-cart').innerHTML = cart.quantity;
+
+
+   document.querySelectorAll('.js-buy-again')
+    .forEach(button => {
+      button.addEventListener('click', () => {
+        const {productId} = button.dataset; 
+        buyAgain(productId);
+      });
+    });
 }
 
 loadPage();
 
 
-const buyButton = document.querySelectorAll('.js-buy-again');
-buyButton.forEach(button => {
-    button.addEventListener('click', () => {
-      //Data attribute - Allows us to attach any information to an element
-      const {productId} = button.dataset;//dataset property gives us all the data attribute attached to the button.   
-      addToCart(productId);
-      updateCartQuantity();
-    });
-});

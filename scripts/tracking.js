@@ -15,9 +15,6 @@
       console.log(url.searchParams.get('productId'));
       */
 
-        // const matchingOrderId = order.id;
-
-  // const matchingProductId = order.products.productId;
 async function loadPage(){
   await loadProductsFetch();
 
@@ -30,16 +27,37 @@ async function loadPage(){
   
   let matchingProductId;
 
-  if (matchingOrderId && Array.isArray(matchingOrderId.products)){//converts products to an array if for some weird reason it isn't using Array.isArray()
-
+  if (matchingOrderId && Array.isArray(matchingOrderId.products)){//converts products to an array if for some weird reason it isn't with Array.isArray()
     matchingProductId = matchingOrderId.products.find(product => product.productId === productId);
-  } else if (matchingOrderId && matchingOrderId.products &&      matchingOrderId.products.productId === productId) {
+
+  } else if (matchingOrderId && matchingOrderId.products && matchingOrderId.products.productId === productId) {
+
     matchingProductId = matchingOrderId.products; 
+    
   }
 
   if (matchingOrderId && matchingProductId) {
     const deliveryDate = dayjs(matchingProductId.estimatedDeliveryTime).format('dddd, MMMM D');
     const product = getProduct(matchingProductId.productId);
+
+    //calculating delivery time
+    const currentDate = new Date();
+    const currentTime = currentDate.getTime();
+
+    const orderIdTime = new Date(`${matchingOrderId.orderTime}`);
+    const orderTime = orderIdTime.getTime();
+
+    const productIdTime = new Date(`${matchingProductId.estimatedDeliveryTime}`);
+    const deliveryTime = productIdTime.getTime();
+    
+    const updateStatus = ((currentTime - orderTime) / (deliveryTime - orderTime)) * 100;
+
+    // const status = updateStatus.toFixed(2);
+    // const deliveryStatus = Math.max(0, Math.min(status, 100));
+
+    console.log(updateStatus);
+      
+
   
     document.querySelector('.js-order-tracking').innerHTML = `
       <a class="back-to-orders-link link-primary" href="orders.html">
@@ -60,32 +78,62 @@ async function loadPage(){
     
       <img class="product-image" src="${product.image}">
     
-      <div class="progress-labels-container">
-        <div class="progress-label">
+      <div class="progress-labels-container js-progress-label">
+      </div>
+    
+      <div class="progress-bar-container">
+        <div class="progress-bar js-progress-bar" style="width:${updateStatus}%"></div>
+      </div>
+    `;
+
+    const progressLabel = document.querySelector('.js-progress-label');
+
+      if (updateStatus && updateStatus <= 49) {
+        progressLabel.innerHTML = `
+        <div class="progress-label current-status">
           Preparing
         </div>
-        <div class="progress-label current-status">
+        <div class="progress-labels">
           Shipped
         </div>
         <div class="progress-label">
           Delivered
         </div>
-      </div>
-    
-      <div class="progress-bar-container">
-        <div class="progress-bar"></div>
-      </div>
-    
-    `;
+        `;
+      } else if (updateStatus >= 50 && updateStatus <= 99) {
+        progressLabel.innerHTML = `
+        <div class="progress-label">
+          Preparing
+        </div>
+        <div class="progress-labels current-status">
+          Shipped
+        </div>
+        <div class="progress-label">
+          Delivered
+        </div>
+        `;
+       
+      } else if (updateStatus >= 100) {
+        progressLabel.innerHTML = `
+        <div class="progress-label">
+          Preparing
+        </div>
+        <div class="progress-labels">
+          Shipped
+        </div>
+        <div class="progress-label current-status">
+          Delivered
+        </div>
+        `;
+      }
+      
   } else {
     document.querySelector('.js-order-tracking').innerHTML = `
     <div class="delivery-date">
       Could not find product
-    </div>`;
+    </div>
+    `;
   }
 }
 
 loadPage();
-
-
-

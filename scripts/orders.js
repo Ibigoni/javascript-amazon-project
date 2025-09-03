@@ -45,50 +45,50 @@ async function loadPage(){
 
 
 
-    function productsListHTML(order) {
+  function productsListHTML(order) {
 
-      let productsListHTML = '';
+    let productsListHTML = '';
 
-      order.products.forEach(productDetails => {
-          const product = getProduct(productDetails.productId)
-          
-          productsListHTML +=` 
-              <div class="product-image-container">
-                <img src="${product.image}">
-              </div>
+    order.products.forEach(productDetails => {
+        const product = getProduct(productDetails.productId)
+        
+        productsListHTML +=` 
+            <div class="product-image-container">
+              <img src="${product.image}">
+            </div>
 
-              <div class="product-details">
-              <div class="product-name">
-                ${product.name}
-              </div>
-              <div class="product-delivery-date">
-                Arriving on: ${
-                  dayjs(productDetails.estimatedDeliveryTime).format('MMMM D')
-                }
-              </div>
-              <div class="product-quantity">
-                Quantity: ${productDetails.quantity}
-              </div>
-              <button class="buy-again-button button-primary js-buy-again"
-              data-product-id="${product.id}"
-              >
-                <img class="buy-again-icon" src="images/icons/buy-again.png">
-                <span class="buy-again-message">Buy it again</span>
+            <div class="product-details">
+            <div class="product-name">
+              ${product.name}
+            </div>
+            <div class="product-delivery-date">
+              Arriving on: ${
+                dayjs(productDetails.estimatedDeliveryTime).format('MMMM D')
+              }
+            </div>
+            <div class="product-quantity">
+              Quantity: ${productDetails.quantity}
+            </div>
+            <button class="buy-again-button button-primary js-buy-again"
+            data-product-id="${product.id}"
+            >
+              <img class="buy-again-icon" src="images/icons/buy-again.png">
+              <span class="buy-again-message">Buy it again</span>
+            </button>
+          </div>
+
+          <div class="product-actions">
+            <a href="tracking.html?orderId=${order.id}&productId=${product.id}">
+              <button class="track-package-button button-secondary">
+                Track package
               </button>
-            </div>
-  
-            <div class="product-actions">
-              <a href="tracking.html?orderId=${order.id}&productId=${product.id}">
-                <button class="track-package-button button-secondary">
-                  Track package
-                </button>
-              </a>
-            </div>
-        `;
-      });
+            </a>
+          </div>
+      `;
+    });
 
-      return productsListHTML;
-}
+    return productsListHTML;
+  }
 
   document.querySelector('.js-orders-grid').innerHTML = ordersHTML;
 

@@ -126,7 +126,10 @@ export function calculateCartQuantity() {
 }
 
 export function resetCartQuantity() {
-    cart.quantity = 0;
+    cart.forEach(cartItem => {
+      cartItem.quantity = 0;
+    });
+    saveToStorage();
   }
 
 export function updateCartQuantity() {

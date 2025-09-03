@@ -1,6 +1,7 @@
  import { orders } from "../data/orders.js";
  import { getProduct, loadProductsFetch } from "../data/products.js";
  import dayjs from 'https://unpkg.com/supersimpledev@8.5.0/dayjs/esm/index.js';
+ import searchBarHTML from "./utils/searchBar.js";
 
 
  //URL parameters = search parameters, lets us save data directly in the URL
@@ -58,7 +59,9 @@ async function loadPage(){
     console.log(updateStatus);
       
 
-  
+    document.querySelector('.js-amazon-header')
+    .innerHTML = searchBarHTML();
+
     document.querySelector('.js-order-tracking').innerHTML = `
       <a class="back-to-orders-link link-primary" href="orders.html">
         View all orders

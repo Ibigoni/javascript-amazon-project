@@ -1,6 +1,7 @@
 import {cart, addToCart, calculateCartQuantity, updateCartQuantity} from  '../data/cart.js';//importing multiple variables from the same folder
 import {products, loadProducts, loadProductsFetch} from '../data/products.js';//()..)represents the folder outside of the current folder. U can also use {cart as myCart} to rename.
 import {formatCurrency } from './utils/money.js'; 
+import searchBarHTML from './utils/searchBar.js';
 
 //Amazon data structure (arrays and objects)
  //something that closely matches the data (an array). Since each products has many values we use (an object) that will represent each data.
@@ -9,6 +10,9 @@ import {formatCurrency } from './utils/money.js';
 
 async function renderProductsGrid() {
  await loadProductsFetch();
+
+ document.querySelector('.js-amazon-header')
+ .innerHTML = searchBarHTML();
  document.querySelector('.js-cart-quantity').innerHTML = calculateCartQuantity();
   //Combining all the html together into one string and put it on the web page
   let productsHTML = '';

@@ -18,6 +18,7 @@ class Product {
   name;
   rating;
   priceCents;
+  keywords;
 
   constructor(productDetails) {
     this.id = productDetails.id;
@@ -25,6 +26,7 @@ class Product {
     this.name = productDetails.name;
     this.rating = productDetails.rating;
     this.priceCents = productDetails.priceCents;
+    this.keywords = productDetails.keywords;
   }
 
   getStarsUrl() {
@@ -136,7 +138,7 @@ export function loadProductsFetch() {
     console.log('Unexpected error. Please try again later.');
   });
 
-  return promise;t
+  return promise;
 }
 
 /*
@@ -177,6 +179,72 @@ export function loadProducts (fun) {//this param contains a funciton
   xhr.send();
 }
 
+
+export function renderProducts(products) {
+    let productsHTML = '';
+  
+    products.forEach((product) => {//Accumulating the result
+      productsHTML += `
+        <div class="product-container">
+                <div class="product-image-container">
+                  <img class="product-image"
+                    src="${product.image}">
+                </div>
+  
+                <div class="product-name limit-text-to-2-lines">
+                  ${product.name}
+                </div>
+  
+                <div class="product-rating-container">
+                  <img class="product-rating-stars"
+                    src="${product.getStarsUrl()}">
+                  <div class="product-rating-count link-primary">
+                    ${product.rating.count}
+                  </div>
+                </div>
+  
+                <div class="product-price">
+                  ${product.getPrice()}
+                </div>
+  
+                <div class="product-quantity-container">
+                  <select class="js-cart-quantity-selector-${product.id}">
+                    <option selected value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                    <option value="6">6</option>
+                    <option value="7">7</option>
+                    <option value="8">8</option>
+                    <option value="9">9</option>
+                    <option value="10">10</option>
+                  </select>
+                </div>
+                
+                ${product.extraInfoHTML()}
+  
+                <div class="product-spacer"></div>
+  
+                <div class="added-to-cart js-added-to-cart-${product.id}">
+                  <img src="images/icons/checkmark.png">
+                  Added
+                </div>
+  
+                <button class="add-to-cart-button button-primary js-add-to-cart"
+                data-product-id="${product.id}">
+                  Add to Cart
+                </button>
+          </div>
+      `;
+    });
+  
+  
+    //Using .toFixed() - will convert a number to string and can tell it how many decimal we want in the bracket.
+    //Generating the html and using the DOM to put the html on the webpage
+    document.querySelector('.js-products-grid')
+    .innerHTML = productsHTML;    
+  }
 
 
 /*

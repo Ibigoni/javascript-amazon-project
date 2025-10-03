@@ -129,6 +129,8 @@ export function resetCartQuantity() {
     cart.forEach(cartItem => {
       cartItem.quantity = 0;
     });
+
+    
     saveToStorage();
   }
 

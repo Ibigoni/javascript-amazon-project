@@ -1,4 +1,3 @@
-
 function searchBarHTML() {
   let searchBarHTML  = '';
 
@@ -13,9 +12,9 @@ function searchBarHTML() {
       </div>
 
       <div class="amazon-header-middle-section">
-        <input class="search-bar" type="text" placeholder="Search">
+        <input class="search-bar js-search-bar" type="text" placeholder="Search">
 
-        <button class="search-button">
+        <button class="search-button js-search-button">
           <img class="search-icon" src="images/icons/search-icon.png">
         </button>
       </div>
@@ -37,4 +36,6 @@ function searchBarHTML() {
   return searchBarHTML;
 }
 
+
 export default searchBarHTML;
+

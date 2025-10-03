@@ -4,9 +4,14 @@ import dayjs from 'https://unpkg.com/supersimpledev@8.5.0/dayjs/esm/index.js';
 import { getProduct, loadProductsFetch } from '../data/products.js';
 import { addToCart, updateCartQuantity, buyAgain } from '../data/cart.js';
 import { cart, resetCartQuantity } from '../data/cart.js';
+import searchBarHTML from './utils/searchBar.js';
+import { renderOrderSummary } from './checkout/orderSummary.js';
 
 async function loadPage(){
   await loadProductsFetch();
+
+  document.querySelector('.js-amazon-header')
+  .innerHTML = searchBarHTML();
 
   let ordersHTML = '';
 
@@ -49,8 +54,21 @@ async function loadPage(){
 
     let productsListHTML = '';
 
+    console.log('order:', order);
+    console.log('order products:', order.products);
+
+    // Safety check statement if a products is undefined for some reason
+    if (!order.products || !Array.isArray(order.products)) {
+      console.error(`Order ${order.id} has no products`);
+      return;
+    }
+
     order.products.forEach(productDetails => {
         const product = getProduct(productDetails.productId)
+        if (!product) {
+          console.error (`Product not found: ${productDetails.productId}`);
+          return;
+        }
         
         productsListHTML +=` 
             <div class="product-image-container">
@@ -92,17 +110,39 @@ async function loadPage(){
 
   document.querySelector('.js-orders-grid').innerHTML = ordersHTML;
 
-  
-  resetCartQuantity()
+  // Fix bug to not reset cart if the order has not been placed (so going to a different page like track packagage and going back to view your orders should not reset the cart back to zero).
+  // Also update the page to remove orders from the checkout page after order has been placed
 
-  document.querySelector('.js-cart').innerHTML = cart.quantity;
+  const cartQuantity = resetCartQuantity() || 0;
+
+  document.querySelector('.js-cart-quantity')
+  .innerHTML = cartQuantity;
+
+
+
+  if (cartQuantity === 0) {
+    const container = document.querySelector('.js-cart-item-container');
+    if (container) container.remove();
+  }
+
 
 
    document.querySelectorAll('.js-buy-again')
     .forEach(button => {
       button.addEventListener('click', () => {
-        const {productId} = button.dataset; 
-        buyAgain(productId);
+        // const { productId } = button.dataset; 
+        buyAgain(button.dataset.productId);
+        // addToCart();
+        updateCartQuantity();
+
+        button.innerHTML = 'Added';
+        setTimeout(() => {
+          button.innerHTML = `
+            <img class="buy-again-icon" src="images/icons/buy-again.png">
+            <span class="buy-again-message">Buy it again</span>
+          `;
+        }, 1000)
+
       });
     });
 }

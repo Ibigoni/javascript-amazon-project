@@ -1,5 +1,5 @@
 import {cart, addToCart, calculateCartQuantity, updateCartQuantity} from  '../data/cart.js';//importing multiple variables from the same folder
-import {products, loadProducts, loadProductsFetch} from '../data/products.js';//()..)represents the folder outside of the current folder. U can also use {cart as myCart} to rename.
+import {products, loadProducts, loadProductsFetch, renderProducts} from '../data/products.js';//()..)represents the folder outside of the current folder. U can also use {cart as myCart} to rename.
 import {formatCurrency } from './utils/money.js'; 
 import searchBarHTML from './utils/searchBar.js';
 
@@ -13,71 +13,42 @@ async function renderProductsGrid() {
 
  document.querySelector('.js-amazon-header')
  .innerHTML = searchBarHTML();
+
  document.querySelector('.js-cart-quantity').innerHTML = calculateCartQuantity();
   //Combining all the html together into one string and put it on the web page
-  let productsHTML = '';
+  
 
-  products.forEach((product) => {//Accumulating the result
-    productsHTML += `
-      <div class="product-container">
-              <div class="product-image-container">
-                <img class="product-image"
-                  src="${product.image}">
-              </div>
+  renderProducts(products);
 
-              <div class="product-name limit-text-to-2-lines">
-                ${product.name}
-              </div>
+  // ----------------Search Funcitonality----------------------------------
 
-              <div class="product-rating-container">
-                <img class="product-rating-stars"
-                  src="${product.getStarsUrl()}">
-                <div class="product-rating-count link-primary">
-                  ${product.rating.count}
-                </div>
-              </div>
+  const searchButton = document.querySelector('.js-search-button');
+  const searchInput = document.querySelector('.js-search-bar');
+  
+  function handleSearch () {
+    const query = searchInput.value.trim().toLowerCase(); //removes unwanted spaces and not case sensitive
 
-              <div class="product-price">
-                ${product.getPrice()}
-              </div>
+    // Update the URL without reloading
+    const url = new URL(window.location);
+    url.searchParams.set('search', query);
+    history.pushState({}, "", url);
 
-              <div class="product-quantity-container">
-                <select class="js-cart-quantity-selector-${product.id}">
-                  <option selected value="1">1</option>
-                  <option value="2">2</option>
-                  <option value="3">3</option>
-                  <option value="4">4</option>
-                  <option value="5">5</option>
-                  <option value="6">6</option>
-                  <option value="7">7</option>
-                  <option value="8">8</option>
-                  <option value="9">9</option>
-                  <option value="10">10</option>
-                </select>
-              </div>
-              
-              ${product.extraInfoHTML()}
+    const filteredProducts = products.filter(product =>
+      // Using implicit return and make it case in-sensitive
+      // Filter products by name or keywords assigned to them
+      product.name.toLowerCase().includes(query) ||
+      product.keywords.some(keyword => keyword.toLowerCase().includes(query))
+    );
 
-              <div class="product-spacer"></div>
+    console.log(filteredProducts);
+    renderProducts(filteredProducts);
+  }
 
-              <div class="added-to-cart js-added-to-cart-${product.id}">
-                <img src="images/icons/checkmark.png">
-                Added
-              </div>
+  searchButton.addEventListener('click', handleSearch);
 
-              <button class="add-to-cart-button button-primary js-add-to-cart"
-              data-product-id="${product.id}">
-                Add to Cart
-              </button>
-        </div>
-    `;
+  searchInput.addEventListener('keydown', e => {
+    if (e.key == 'Enter') handleSearch();
   });
-
-
-  //Using .toFixed() - will convert a number to string and can tell it how many decimal we want in the bracket.
-  //Generating the html and using the DOM to put the html on the webpage
-  document.querySelector('.js-products-grid')
-  .innerHTML = productsHTML;
 
 
   //Using addEventListener and DOM querySelectorAll to make the Add to cart button work

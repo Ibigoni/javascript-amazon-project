@@ -14,12 +14,13 @@ import { orders } from '../data/orders.js';
 *We can onlu use "await" inside an async function
 */
 
-orders.forEach(order => {
-  order.products.forEach(product => {
-    const estimatedDeliveryDate = product.estimatedDeliveryTime;
-    console.log(estimatedDeliveryDate);
-  });
-})
+
+// orders.forEach(order => {
+//   order.products.forEach(product => {
+//     const estimatedDeliveryDate = product.estimatedDeliveryTime;
+//     console.log(estimatedDeliveryDate);
+//   });
+// })
 
 async function loadPage() {
   //Error handling for async await "try/catch". codes that may potentially cause an error.
